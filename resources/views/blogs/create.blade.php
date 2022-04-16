@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/blogs/edit.css') }}">
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -44,7 +45,7 @@
                     <label for="images" class="col-md-2 col-form-label text-md-center">Images</label>
 
                         <div class="col-md-8 ">
-                        <span onclick="addImage(this)" style="line-height:30px;text-align:center;display:block;width:80px;height:30px;background:green;color:#fff;border-radius:4px">add Image</span>
+                        <span class="add-image" onclick="addImage(this)" >add Image</span>
 
                             @if ($errors->has('files'))
                             @foreach ($errors->get('files') as $error)
@@ -55,12 +56,6 @@
                             @endif
 
                         </div>
-                        <script>
-                            function addImage(tag) {
-                            var tag = $(tag);
-                            tag.parent('div').append('<input type="file" name="images[]" multiple class="form-control" accept="image/*">');
-                        }
-                        </script>
                     </div>
 
                     <div class="form-group row">
@@ -93,4 +88,6 @@
         </div>
     </div>
 </div>
+<script src="{{ asset('js/blogs/edit.js') }}"></script>
+
 @endsection

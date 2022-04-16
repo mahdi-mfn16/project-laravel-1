@@ -14,6 +14,6 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
 
-// mix.sass('resources/sass/blogs/edit.sass', 'public/css/blogs/edit.css');
-// // mix.sass('resources/js/blogs/edit.js', 'public/js/blogs/edit.js');
-// mix.sass('resources/sass/blogs/index.sass', 'public/css/blogs/index.css');
+mix.sass('resources/sass/blogs/edit.sass', 'public/css/blogs/edit.css');
+mix.js('resources/js/blogs/edit.js', 'public/js/blogs/edit.js');
+mix.sass('resources/sass/blogs/index.sass', 'public/css/blogs/index.css');

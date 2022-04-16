@@ -46,7 +46,7 @@
                     <div class="form-group row">
                         <label for="images" class="col-md-2 col-form-label text-md-center">Images</label>
                         <div class="col-md-8 ">
-                            <span onclick="addImage(this)" style="line-height:30px;text-align:center;display:block;width:80px;height:30px;background:green;color:#fff;border-radius:4px">add Image</span>
+                            <span class="add-image" onclick="addImage(this)" >add Image</span>
                             @if ($errors->has('files'))
                             @foreach ($errors->get('files') as $error)
                             <span class="invalid-feedback" role="alert">
@@ -71,44 +71,7 @@
                             </ul>
                         </div>
                     </div>
-
-                    <script >
-                        function addImage(tag) {
-                            var tag = $(tag);
-                            tag.parent('div').append('<input type="file" name="images[]" multiple class="form-control" accept="image/*">');
-                        }
-
-                        function deleteImage(tag) {
-                            
-                            var tag = $(tag);
-                            var imageId = tag.attr('data-image');
-                        
-                            $.ajaxSetup({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
-                            });
-
-                           
-                            $.ajax({
-                                type: 'POST',
-                                url: "{{ route('delete-image') }}",
-                                data: {
-                                    image: imageId,
-                                },
-                                success: function(data) {
-                                    var images = data.images;
-                                            
-                                    $('#imgs').empty();
-                                    $.each(JSON.parse(images),function(index , value){
-                                        $('#imgs').append('<li><img data-blog="' + value['blog_id'] + '" id="' + value['id'] + '" src="' + value['path'] + '" alt=""><a class="float-left btn btn-danger" data-image="' + value['id'] + '" onclick="deleteImage(this)" class="exit-x">X</a></li>');
-                                    });
-                                }
-                            });
-
-
-                        }
-                    </script>
+                   
                     <div class="form-group row">
                         <label for="body" class="col-md-2 col-form-label text-md-center">Content</label>
                         <div class="col-md-11 ml-4">
@@ -140,4 +103,8 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="{{ asset('js/blogs/edit.js') }}"></script>
+<script type="text/javascript">
+   var ajaxRoute = "{{ route('delete-image') }}";
+</script>
 @endsection

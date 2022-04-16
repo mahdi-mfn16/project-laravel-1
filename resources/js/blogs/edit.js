@@ -20,7 +20,7 @@ function deleteImage(tag) {
    
     $.ajax({
         type: 'POST',
-        url: "{{ route('delete-image') }}",
+        url: ajaxRoute,
         data: {
             image: imageId,
         },
@@ -33,6 +33,7 @@ function deleteImage(tag) {
             });
         }
     });
+    
 
 
 }
