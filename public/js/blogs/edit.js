@@ -1,9 +1,6 @@
-/******/ (() => { // webpackBootstrap
 var __webpack_exports__ = {};
-/*!************************************!*\
-  !*** ./resources/js/blogs/edit.js ***!
-  \************************************/
-function addImage(tag) {
+
+  function addImage(tag) {
   var tag = $(tag);
   tag.parent('div').append('<input type="file" name="images[]" multiple class="form-control" accept="image/*">');
 } //-------------------
@@ -32,5 +29,5 @@ function deleteImage(tag) {
     }
   });
 }
-/******/ })()
+
 ;
