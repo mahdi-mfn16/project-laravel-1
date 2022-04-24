@@ -4,8 +4,6 @@ namespace App\Repositories\Eloquent;
 
 use App\Repositories\Interfaces\BlogRepositoryInterface;
 use App\Blog;
-use Illuminate\Database\Eloquent\Collection;
-
 
 class BlogRepository extends BaseRepository implements BlogRepositoryInterface
 {
@@ -27,6 +25,15 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
         }
 
         return $user->can($name , $this->model->find($id));
+    }
+
+    public function paginate($count, $user_id = null)
+    {
+        if($user_id === null){
+            return $this->model->paginate($count);
+        }
+
+        return $this->model->where('user_id', $user_id)->paginate($count);
     }
 
     

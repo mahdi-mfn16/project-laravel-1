@@ -1,7 +1,8 @@
 <?php
 
-use App\Blog;
-use App\Http\Middleware\CheckPrivilege;
+
+use App\Http\Middleware\CheckAdmin;
+use App\Http\Middleware\CheckUser;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,19 +25,22 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::prefix('blogs')->middleware(['auth' , CheckPrivilege::class])->group(function(){
-    Route::get('/' , 'BlogController@index')->name('index');
-    Route::get('/admin' , 'BlogController@adminIndex')->name('admin-index')->withoutMiddleware(CheckPrivilege::class);
-    Route::get('/create' , 'BlogController@create')->name('create-blog');
-    Route::post('/create' , 'BlogController@store');
-    Route::get('/edit/{blog}' , 'BlogController@edit')->name('edit-blog');
-    Route::put('/edit/{blog}' , 'BlogController@update');
-    Route::delete('/delete/{blog}' , 'BlogController@destroy')->name('delete-blog');
+Route::prefix('blogs')->middleware(['auth' , CheckUser::class])->group(function(){
+    Route::get('/' , 'User\BlogController@index')->name('index');
+    Route::get('/create' , 'User\BlogController@create')->name('create-blog');
+    Route::post('/create' , 'User\BlogController@store');
+    Route::get('/edit/{blog}' , 'User\BlogController@edit')->name('edit-blog');
+    Route::put('/edit/{blog}' , 'User\BlogController@update');
+    Route::delete('/delete/{blog}' , 'User\BlogController@destroy')->name('delete-blog');
     
 });
+
+Route::prefix('blogs')->middleware(['auth' , CheckAdmin::class])->group(function(){
+    Route::get('/admin' , 'Admin\BlogController@index')->name('admin-index');   
+});
     
-Route::post('images/delete' , 'ImageController@delete')->name('delete-image')
-    ->middleware(['auth' , CheckPrivilege::class]);
+Route::post('images/delete' , 'User\ImageController@delete')->name('delete-image')
+    ->middleware(['auth' , CheckUser::class]);
     
 
 

@@ -12,7 +12,7 @@
                     <div class="form-group row">
                         <label for="title" class="mt-2 col-md-2 col-form-label text-md-center">Title</label>
                         <div class="col-md-9">
-                            <input id="title" type="text" class="mr-2 mt-3 form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required autocomplete="title" autofocus>
+                            <input id="title" type="text" class="mr-2 mt-3 form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}"  autocomplete="title" autofocus>
                             @error('title')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -23,7 +23,7 @@
                     <div class="form-group row">
                         <label for="description" class="mt-2 col-md-2 col-form-label text-md-center">Description</label>
                         <div class="col-md-9">
-                            <input id="description" type="text" class="mt-2 mr-2 form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required autocomplete="description" autofocus>
+                            <input id="description" type="text" class="mt-2 mr-2 form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" autocomplete="description" autofocus>
                             @error('description')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

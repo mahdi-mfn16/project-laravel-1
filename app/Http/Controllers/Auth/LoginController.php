@@ -55,6 +55,7 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
+        alert()->success('You have successfully logged in!' , 'Success');
         if($user->privilege){
             return redirect(route('admin-index'));
         }else{

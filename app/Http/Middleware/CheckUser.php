@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class CheckPrivilege
+class CheckUser
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,9 @@ class CheckPrivilege
     public function handle($request, Closure $next)
     {
         if ($request->user()->privilege) {
+            alert()->error("You Don't Have Permission to Access this Page!", 'Error');
             return redirect(route('admin-index'));
         }
         return $next($request);
-        
     }
 }

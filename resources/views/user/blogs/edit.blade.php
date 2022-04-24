@@ -14,7 +14,7 @@
                     <div class="form-group row">
                         <label for="title" class="mt-2 col-md-2 col-form-label text-md-center">Title</label>
                         <div class="col-md-9">
-                            <input id="title" type="text" class="mr-2 mt-3 form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') ? old('title') : $blog->title }}" required autocomplete="title" autofocus>
+                            <input id="title" type="text" class="mr-2 mt-3 form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') ? old('title') : $blog->title }}"  autocomplete="title" autofocus>
                             @error('title')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -25,7 +25,8 @@
                     <div class="form-group row">
                         <label for="description" class="mt-2 col-md-2 col-form-label text-md-center">Description</label>
                         <div class="col-md-9">
-                            <input id="description" type="text" class="mt-2 mr-2 form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') ? old('description') : $blog->description }}" required autocomplete="description" autofocus>
+                            <input id="description" type="text" class="mt-2 mr-2 form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') ? old('description') : $blog->description }}"  autocomplete="description" autofocus>
+                            <input type="hidden" name="blog_id" value="{{ $blog->id }}">
                             @error('description')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -46,7 +47,7 @@
                     <div class="form-group row">
                         <label for="images" class="col-md-2 col-form-label text-md-center">Images</label>
                         <div class="col-md-8 ">
-                            <span class="add-image" onclick="addImage(this)" >add Image</span>
+                            <span class="add-image" onclick="addImage(this)">add Image</span>
                             @if ($errors->has('files'))
                             @foreach ($errors->get('files') as $error)
                             <span class="invalid-feedback" role="alert">
@@ -57,25 +58,25 @@
 
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <div class="col-md-8 ">
                             <ul id="imgs">
                                 @foreach ($images as $image)
                                 <li>
-                                    <img data-blog="{{ $image->blog_id }}" id="{{ $image->id }}" src="{{ asset($image->path) }}" alt="">
                                     <a class="float-left btn btn-danger" data-image="{{ $image->id }}" onclick="deleteImage(this)" class="exit-x">X</a>
+                                    <div class="image-div" data-blog="{{ $image->blog_id }}" id="{{ $image->id }}" style="background-size: cover;background-image: url({{ asset($image->path) }}) ;"></div>
                                 </li>
                                 @endforeach
 
                             </ul>
                         </div>
                     </div>
-                   
+
                     <div class="form-group row">
                         <label for="body" class="col-md-2 col-form-label text-md-center">Content</label>
                         <div class="col-md-11 ml-4">
-                            <textarea id="body" type="text" class="form-control ckeditor  @error('body') is-invalid @enderror" name="body" value="{{ old('body') ? old('body') : $blog->body }}" required autocomplete="body" autofocus>
+                            <textarea id="body" type="text" class="form-control ckeditor  @error('body') is-invalid @enderror" name="body" value="{{ old('body') ? old('body') : $blog->body }}" autocomplete="body" autofocus>
                             {{ old('body') ? old('body') : $blog->body }}
                             </textarea>
                             @error('body')
@@ -105,6 +106,6 @@
 </div>
 <script type="text/javascript" src="{{ asset('js/blogs/edit.js') }}"></script>
 <script type="text/javascript">
-   var ajaxRoute = "{{ route('delete-image') }}";
+    var ajaxRoute = "{{ route('delete-image') }}";
 </script>
 @endsection

@@ -11,6 +11,6 @@ $factory->define(Blog::class, function (Faker $faker) {
         'description'=>$faker->text(250),
         'body'=>$faker->paragraph(20),
         'status'=>rand(0,1),
-        'user_id'=>rand(1,4),
+        'user_id'=>rand(1,2),
     ];
 });

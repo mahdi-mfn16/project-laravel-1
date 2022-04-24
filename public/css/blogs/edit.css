@@ -18,3 +18,8 @@ ul {
   border: 1px solid darkgreen;
   cursor: pointer;
 }
+
+.image-div {
+  width: 100px;
+  height: 100px;
+}

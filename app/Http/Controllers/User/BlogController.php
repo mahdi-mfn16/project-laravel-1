@@ -1,16 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
-
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreBlogRequest;
+use App\Http\Requests\UpdateBlogRequest;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Repositories\Interfaces\BlogRepositoryInterface;
 use App\Repositories\Interfaces\ImageRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
 
 class BlogController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -31,21 +35,8 @@ class BlogController extends Controller
     
     public function index(Request $request)
     {
-        $blogs = $request->user()->blogs;
-        return view('blogs.index', ['blogs'=>$blogs]);
-    }
-
-
-
-
-
-    public function adminIndex(Request $request)
-    {
-        if (!$this->blogRepository->can('viewAny', $request->user())) {
-           return redirect(route('index'));
-        }
-        $blogs = $this->blogRepository->all();
-        return view('blogs.admin-index' , ['blogs'=>$blogs]);
+        $blogs = $this->blogRepository->paginate(5, Auth::id());
+        return view('user.blogs.index', ['blogs'=>$blogs]);
     }
 
 
@@ -59,7 +50,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('blogs.create');
+        return view('user.blogs.create');
     }
 
 
@@ -72,15 +63,10 @@ class BlogController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBlogRequest $request)
     {
-        $request->validate([
-            'title'=>'required|unique:blogs,title',
-            'description'=>'required',
-            'status'=>'required|in:1,0',
-            'body'=>'required',
-        ]);
-        
+ 
+  
         $blog = $this->blogRepository->create([
             'title'=>$request->title,
             'description'=>$request->description,
@@ -94,7 +80,10 @@ class BlogController extends Controller
             $images = $request->file('images');
             $this->imageRepository->upload($images , $blog);
          }
-        
+
+
+        alert()->success('Your Blog was Created Successfully!','Success');
+
         return redirect(route('index'));
     }
 
@@ -113,14 +102,15 @@ class BlogController extends Controller
     public function edit(Request $request, $blogId)
     {
         if(!$this->blogRepository->can('update' , $request->user(), $blogId)){
-            return redirect(back());
+            alert()->error("You Don't Have Permission to Edit this Blog!",'Error');
+            return redirect(route('index'));
         }
 
         $blog = $this->blogRepository->findById($blogId);
         $images = $blog->images;
 
         
-        return view('blogs.edit' , ['blog'=>$blog , 'images'=>$images]);
+        return view('user.blogs.edit' , ['blog'=>$blog , 'images'=>$images]);
     }
 
 
@@ -135,21 +125,15 @@ class BlogController extends Controller
      * @param  \App\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $blogId)
+    public function update(UpdateBlogRequest $request, $blogId)
     {
         if(!$this->blogRepository->can('update' , $request->user(), $blogId)){
-            return redirect(back());
+            alert()->error("You Don't Have Permission to Edit this Blog!",'Error');
+            return redirect(route('index'));
         }
 
-        $request->validate([
-            'title'=>[
-                'required',
-                Rule::unique('blogs')->ignore($request->user()->id, 'user_id')
-            ],
-            'description'=>'required',
-            'status'=>'required|in:1,0',
-            'body'=>'required',
-        ]);
+        // return $request;
+
         
         $this->blogRepository->update([
             'title'=>$request->title,
@@ -167,6 +151,7 @@ class BlogController extends Controller
             $this->imageRepository->upload($images , $blog);
          }
          
+        alert()->success('Your Blog was Updated Successfully!','Success'); 
         return redirect(route('index'));
 
     }
@@ -186,7 +171,11 @@ class BlogController extends Controller
     {
         if($this->blogRepository->can('delete' , $request->user(), $blogId)){
             $this->blogRepository->delete($blogId);
+        }else{
+            alert()->error("You Don't Have Permission to Delete this Blog!",'Error');
         }
+        
         return redirect(route('index'));
     }
 }
+

@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquent;
 
 use App\Repositories\Interfaces\ImageRepositoryInterface;
 use App\Image;
+use Illuminate\Support\Str;
 
 class ImageRepository extends BaseRepository implements ImageRepositoryInterface
 {
@@ -17,7 +18,8 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
         
         foreach($images as $image) {
 
-            $name = $image->getClientOriginalName();
+            $name = hash('ripemd160' , Str::random(10)). '_' . $image->getClientOriginalName();
+            
             $path = $image->storeAs('images', $name, 'public');
 
             $this->model->create([
