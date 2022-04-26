@@ -17,7 +17,7 @@ class CreateImagesTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('path')->nullable();
-            $table->unsignedBigInteger('blog_id');
+            $table->unsignedBigInteger('blog_id')->nullable();
             $table->foreign('blog_id')->references('id')->on('blogs');
             $table->timestamps();
         });

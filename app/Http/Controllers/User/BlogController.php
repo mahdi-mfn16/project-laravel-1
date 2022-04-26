@@ -8,6 +8,9 @@ use App\Http\Requests\UpdateBlogRequest;
 use Illuminate\Http\Request;
 use App\Repositories\Interfaces\BlogRepositoryInterface;
 use App\Repositories\Interfaces\ImageRepositoryInterface;
+use App\Services\DeleteBlogService;
+use App\Services\StoreBlogService;
+use App\Services\UpdateBlogService;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -67,20 +70,9 @@ class BlogController extends Controller
     {
  
   
-        $blog = $this->blogRepository->create([
-            'title'=>$request->title,
-            'description'=>$request->description,
-            'status'=>$request->status,
-            'body'=>$request->body,
-            'user_id'=>$request->user()->id,
-        ]);
-
-        if ($request->hasfile('images')) {
-            
-            $images = $request->file('images');
-            $this->imageRepository->upload($images , $blog);
-         }
-
+        $storeBlogService = new StoreBlogService($this->blogRepository , $this->imageRepository);
+        $storeBlogService->store($request);
+        
 
         alert()->success('Your Blog was Created Successfully!','Success');
 
@@ -132,24 +124,9 @@ class BlogController extends Controller
             return redirect(route('index'));
         }
 
-        // return $request;
-
+        $updateBlogService = new UpdateBlogService($this->blogRepository , $this->imageRepository);
+        $updateBlogService->update($request, $blogId);
         
-        $this->blogRepository->update([
-            'title'=>$request->title,
-            'description'=>$request->description,
-            'status'=>$request->status,
-            'body'=>$request->body,
-           
-        ],$blogId);
-
-        $blog = $this->blogRepository->findById($blogId);
-    
-
-        if ($request->hasfile('images')) {
-            $images = $request->file('images');
-            $this->imageRepository->upload($images , $blog);
-         }
          
         alert()->success('Your Blog was Updated Successfully!','Success'); 
         return redirect(route('index'));
@@ -170,12 +147,10 @@ class BlogController extends Controller
     public function destroy(Request $request , $blogId)
     {
         if($this->blogRepository->can('delete' , $request->user(), $blogId)){
-            $blog = $this->blogRepository->findById($blogId);
-            $this->blogRepository->update([
-                'title'=>$blog->title."_deleted_{$blogId}",
-                ],$blogId);
+            
+            $deleteBlogService = new DeleteBlogService($this->blogRepository , $this->imageRepository);
+            $deleteBlogService->delete($blogId);
 
-            $this->blogRepository->delete($blogId);
         }else{
             alert()->error("You Don't Have Permission to Delete this Blog!",'Error');
         }

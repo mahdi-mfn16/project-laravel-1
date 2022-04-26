@@ -8,5 +8,6 @@ interface ImageRepositoryInterface
 {
 
     public function upload($images , $blog);
+    public function destroy($images);
 
 }

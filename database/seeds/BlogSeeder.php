@@ -12,6 +12,11 @@ class BlogSeeder extends Seeder
      */
     public function run()
     {
-        factory(Blog::class,40)->create();
+        
+        if(!Blog::find(1)){
+            factory(Blog::class,40)->create();
+        }
+        
+        
     }
 }

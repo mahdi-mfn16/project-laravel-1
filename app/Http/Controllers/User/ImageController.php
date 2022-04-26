@@ -23,15 +23,14 @@ class ImageController extends Controller
         $image = $this->imageRepository->findById($imageId);
         $blog = $image->blog;
         
-        if(File::exists(public_path($image->path))){
-            File::delete(public_path($image->path));
-            $this->imageRepository->delete($imageId);       
-        }
+        $this->imageRepository->destroy($image);
         
         $images = $blog->images;
         return response()->json(['images'=>json_encode($images,true)]);
 
     }
+
+
 
     
 }

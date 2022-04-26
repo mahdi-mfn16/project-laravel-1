@@ -15,32 +15,37 @@ class UserSeeder extends Seeder
     public function run(Faker $faker)
     {
         // factory(User::class,3)->create();
-
-        
-        User::insert([[
-            'name' => 'ali',
+        User::updateOrCreate(
+            ['name' => 'ali'],
+            [
             'email' => Str::random(10).'@gmail.com',
             'password' => bcrypt('12345678'),
-            'email_verified_at' => now(),
-            'remember_token' => Str::random(10),
+            // 'email_verified_at' => now(),
+            // 'remember_token' => Str::random(10),
             'privilege'=>0,
-        ],
-        [
-            'name' => 'mehdi',
+            ]
+        );
+        User::updateOrCreate(
+            ['name' => 'mehdi'],
+            [
             'email' => Str::random(10).'@gmail.com',
             'password' => bcrypt('12345678'),
-            'email_verified_at' => now(),
-            'remember_token' => Str::random(10),
+            // 'email_verified_at' => now(),
+            // 'remember_token' => Str::random(10),
             'privilege'=>0,
-        ],
-        [
-            'name' => 'mohammad',
+            ]
+        );
+        User::updateOrCreate(
+            ['name' => 'mohammad'],
+            [
             'email' => Str::random(10).'@gmail.com',
             'password' => bcrypt('12345678'),
-            'email_verified_at' => now(),
-            'remember_token' => Str::random(10),
+            // 'email_verified_at' => now(),
+            // 'remember_token' => Str::random(10),
             'privilege'=>1,
-        ],
-        ]);
+            ]
+        );
+        
+        
     }
 }
