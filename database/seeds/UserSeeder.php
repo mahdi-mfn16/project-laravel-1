@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
 
         
         User::insert([[
-            'name' => $faker->name,
+            'name' => 'ali',
             'email' => Str::random(10).'@gmail.com',
             'password' => bcrypt('12345678'),
             'email_verified_at' => now(),
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'privilege'=>0,
         ],
         [
-            'name' => $faker->name,
+            'name' => 'mehdi',
             'email' => Str::random(10).'@gmail.com',
             'password' => bcrypt('12345678'),
             'email_verified_at' => now(),
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             'privilege'=>0,
         ],
         [
-            'name' => $faker->name,
+            'name' => 'mohammad',
             'email' => Str::random(10).'@gmail.com',
             'password' => bcrypt('12345678'),
             'email_verified_at' => now(),

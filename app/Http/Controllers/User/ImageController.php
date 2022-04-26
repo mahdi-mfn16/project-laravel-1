@@ -25,7 +25,7 @@ class ImageController extends Controller
         
         if(File::exists(public_path($image->path))){
             File::delete(public_path($image->path));
-            $image->delete();       
+            $this->imageRepository->delete($imageId);       
         }
         
         $images = $blog->images;

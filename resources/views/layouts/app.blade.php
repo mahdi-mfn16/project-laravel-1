@@ -58,7 +58,7 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('index') }}">
+                                <a class="dropdown-item" href="{{request()->user()->privilege ? route('admin-index') : route('index') }}">
                                     {{ __('Dashboard') }}
                                 </a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();

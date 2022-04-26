@@ -20,11 +20,11 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
 
             $name = hash('ripemd160' , Str::random(10)). '_' . $image->getClientOriginalName();
             
-            $path = $image->storeAs('images', $name, 'public');
+            $path = $image->storeAs('images', $name , 'public_only');
 
             $this->model->create([
                 'name' => $name,
-                'path' => '/storage/'.$path,
+                'path' => '/uploads/'.$path,
                 'blog_id'=>$blog->id,
               ]);
         }

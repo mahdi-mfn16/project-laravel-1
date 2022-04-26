@@ -170,6 +170,11 @@ class BlogController extends Controller
     public function destroy(Request $request , $blogId)
     {
         if($this->blogRepository->can('delete' , $request->user(), $blogId)){
+            $blog = $this->blogRepository->findById($blogId);
+            $this->blogRepository->update([
+                'title'=>$blog->title."_deleted_{$blogId}",
+                ],$blogId);
+
             $this->blogRepository->delete($blogId);
         }else{
             alert()->error("You Don't Have Permission to Delete this Blog!",'Error');
