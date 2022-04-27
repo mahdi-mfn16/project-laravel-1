@@ -2,8 +2,9 @@
 
 namespace App\Repositories\Eloquent;
 
+use App\Models\Blog;
 use App\Repositories\Interfaces\BlogRepositoryInterface;
-use App\Blog;
+
 
 class BlogRepository extends BaseRepository implements BlogRepositoryInterface
 {
@@ -21,9 +22,10 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
     public function can($name , $user , $id=Blog::class)
     {
         if ($id === Blog::class){
+            
             return $user->can($name , Blog::class);
         }
-
+        
         return $user->can($name , $this->model->find($id));
     }
 

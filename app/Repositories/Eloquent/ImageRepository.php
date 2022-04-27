@@ -3,7 +3,7 @@
 namespace App\Repositories\Eloquent;
 
 use App\Repositories\Interfaces\ImageRepositoryInterface;
-use App\Image;
+use App\Models\Image;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -33,13 +33,14 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
 
 
 
-    public function destroy($images)
+    public function destroy($image)
     {
-        foreach ($images as $image) {
+
+        
             if (File::exists(public_path($image->path))) {
                 File::delete(public_path($image->path));
                 $this->delete($image->id);
             }
-        }
+        
     }
 }

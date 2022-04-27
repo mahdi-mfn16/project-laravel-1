@@ -23,6 +23,7 @@ class ImageController extends Controller
         $image = $this->imageRepository->findById($imageId);
         $blog = $image->blog;
         
+        // return $image->get();
         $this->imageRepository->destroy($image);
         
         $images = $blog->images;

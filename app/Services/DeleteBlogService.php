@@ -23,8 +23,12 @@ class DeleteBlogService
             $this->blogRepository->update([
                 'title'=>$blog->title."_deleted_{$blogId}",
                 ],$blogId);
-            // $images = $blog->images;
-            // $this->imageRepository->destroy($images);
+            $images = $blog->images;
+            
+            foreach($images as $image){
+                $this->imageRepository->destroy($image);
+            }
+            
             $this->blogRepository->delete($blogId);
         
     }

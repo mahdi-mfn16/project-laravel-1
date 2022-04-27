@@ -88,7 +88,7 @@ class BlogController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Blog  $blog
+     * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, $blogId)
@@ -114,7 +114,7 @@ class BlogController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Blog  $blog
+     * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateBlogRequest $request, $blogId)
@@ -141,11 +141,12 @@ class BlogController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Blog  $blog
+     * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request , $blogId)
     {
+        
         if($this->blogRepository->can('delete' , $request->user(), $blogId)){
             
             $deleteBlogService = new DeleteBlogService($this->blogRepository , $this->imageRepository);
