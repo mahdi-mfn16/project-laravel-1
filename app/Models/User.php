@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Verta;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','privilege',
+        'name', 'email', 'password','privilege', 'created_by_user',
     ];
 
     /**
@@ -40,6 +41,29 @@ class User extends Authenticatable
     public function blogs()
     {
         return $this->hasMany(Blog::class);
+    }
+
+
+    public function garegorian2jalali($time){
+        $v = new Verta($time);
+        return $v;
+    }
+
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
+    }
+
+    public function hasPermission($permissionLabel)
+    {
+        $user_permissions=[];
+        $permissions = $this->permissions()->get();
+        foreach($permissions as $permission){
+            array_push($user_permissions, $permission->label);
+        }
+        return in_array($permissionLabel, $user_permissions);
+        
     }
 
 }

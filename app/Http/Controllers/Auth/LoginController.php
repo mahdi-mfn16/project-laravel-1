@@ -57,7 +57,7 @@ class LoginController extends Controller
     {
         alert()->success('You have successfully logged in!' , 'Success');
         if($user->privilege){
-            return redirect(route('admin-index'));
+            return redirect(route('admin-dashboard'));
         }else{
             return redirect(route('index'));
         }

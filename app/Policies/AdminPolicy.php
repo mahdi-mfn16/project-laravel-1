@@ -2,11 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class BlogPolicy
+class AdminPolicy
 {
     use HandlesAuthorization;
 
@@ -18,17 +17,17 @@ class BlogPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->privilege;
+        //
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Blog  $blog
+     * @param  \App\User  $model
      * @return mixed
      */
-    public function view(User $user, Blog $blog)
+    public function view(User $user, User $model)
     {
         //
     }
@@ -48,34 +47,34 @@ class BlogPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Blog  $blog
+     * @param  \App\User  $model
      * @return mixed
      */
-    public function update(User $user, Blog $blog)
+    public function update(User $user, User $admin)
     {
-        return $user->privilege or $user->id === $blog->user_id;
+        return $user->id != $admin->id; 
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Blog  $blog
+     * @param  \App\User  $model
      * @return mixed
      */
-    public function delete(User $user, Blog $blog)
+    public function delete(User $user, User $admin)
     {
-        return $user->id === $blog->user_id;
+        return $user->id != $admin->id;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Blog  $blog
+     * @param  \App\User  $model
      * @return mixed
      */
-    public function restore(User $user, Blog $blog)
+    public function restore(User $user, User $model)
     {
         //
     }
@@ -84,10 +83,10 @@ class BlogPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Blog  $blog
+     * @param  \App\User  $model
      * @return mixed
      */
-    public function forceDelete(User $user, Blog $blog)
+    public function forceDelete(User $user, User $model)
     {
         //
     }

@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('User Dashboard List') }}
+                <div class="card-header">{{ __('Blogers Dashboard List') }}
                 <button class="btn btn-success float-right"><a href="{{ route('create-blog') }}">Create Blog</a></button>
                 </div>
 

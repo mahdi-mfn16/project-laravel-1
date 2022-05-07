@@ -34,7 +34,7 @@ function deleteImage(tag) {
           var images = data.images;
           $('#imgs').empty();
           $.each(JSON.parse(images), function (index, value) {
-            $('#imgs').append('<li><a class="float-left btn btn-danger" data-image="' + value['id'] + '" onclick="deleteImage(this)" class="exit-x">X</a><div class="image-div" style="background-size: cover;background-image: url(' + value['path'] + ') ;" data-blog="' + value['blog_id'] + '" id="' + value['id'] + '" ></div></li>');
+            $('#imgs').append('<li><a class="float-left btn btn-danger ml-4" data-image="' + value['id'] + '" onclick="deleteImage(this)" class="exit-x">X</a><div class="image-div float-left" style="background-position: center;background-size: cover;background-image: url(' + value['path'] + ') ;" data-blog="' + value['blog_id'] + '" id="' + value['id'] + '" ></div></li>');
           });
         }
       });

@@ -7,7 +7,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Edit Blog') }}</div>
-                <form action="{{ route('edit-blog', ['blog'=>$blog->id]) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin-edit-blog', ['blog'=>$blog->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -61,6 +61,11 @@
 
                     <div class="form-group row">
                         <div class="col-md-8 ">
+                            <!-- <style>
+                                a{
+                                    background-position: center;
+                                }
+                            </style> -->
                             <ul id="imgs">
                                 @foreach ($images as $image)
                                 <li>

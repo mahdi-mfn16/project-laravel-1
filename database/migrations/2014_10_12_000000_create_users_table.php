@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->boolean('privilege')->default(false);
+            $table->unsignedBigInteger('created_by_user')->nullable();
             $table->timestamps();
         });
     }
