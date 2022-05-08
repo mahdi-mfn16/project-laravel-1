@@ -50,6 +50,7 @@
                             </span>
                             @enderror
                         </div>
+                        
                     </div>
                     <div class="form-group row">
                         <label for="password-confirm" class="mt-2 col-md-2 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
