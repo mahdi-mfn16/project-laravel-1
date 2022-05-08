@@ -57,12 +57,14 @@ class User extends Authenticatable
 
     public function hasPermission($permissionLabel)
     {
-        $user_permissions=[];
+        // $user_permissions=[];
         $permissions = $this->permissions()->get();
-        foreach($permissions as $permission){
-            array_push($user_permissions, $permission->label);
-        }
-        return in_array($permissionLabel, $user_permissions);
+        // foreach($permissions as $permission){
+        //     array_push($user_permissions, $permission->label);
+        // }
+        // return in_array($permissionLabel, $user_permissions);
+        return $permissions->contains('label', $permissionLabel);
+        
         
     }
 
