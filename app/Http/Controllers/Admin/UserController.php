@@ -74,7 +74,7 @@ class UserController extends Controller
         $this->userRepository->create([
             'name'=>$data['name'],
             'email'=>$data['email'],
-            'password'=>bcrypt($data['email']),
+            'password'=>bcrypt($data['password']),
             'created_by_user'=>$request->user()->id,
         ]);
 
@@ -165,7 +165,10 @@ class UserController extends Controller
             return redirect(route('index-user'));
             
         }
-            
+        
+        $user = $this->userRepository->findById($userId);
+        $this->userRepository->update(['email'=>$user->email."_deleted_{$userId}"], $userId);
+        $user->blogs()->delete();
         $this->userRepository->delete($userId);
         alert()->success('this User has Deleted Successfully!','Success'); 
         return redirect(route('index-user'));

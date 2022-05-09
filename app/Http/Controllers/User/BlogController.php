@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
 use App\Repositories\Eloquent\BlogRepository;
+use App\Repositories\Interfaces\BlogRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Services\BlogService;
 
@@ -24,22 +25,20 @@ class BlogController extends Controller
 
 
      private $blogService;
+     private $blogRepository;
     
 
-     
-    
 
-     public function __construct(BlogService $blogService)
+     public function __construct(BlogService $blogService, BlogRepositoryInterface $blogRepository)
      {
          $this->blogService = $blogService;
-         
-
+         $this->blogRepository = $blogRepository;
      }
 
     
-    public function index(Request $request)
+    public function index()
     {
-        $blogs = $this->blogService->blogRepository->paginate(5, Auth::id());
+        $blogs = $this->blogRepository->paginate(5, Auth::id());
         return view('user.blogs.index', ['blogs'=>$blogs]);
     }
 
@@ -93,12 +92,12 @@ class BlogController extends Controller
      */
     public function edit(Request $request, $blogId)
     {
-        if(!$this->blogService->blogRepository->can('update' , $request->user(), $blogId)){
+        if(!$this->blogRepository->can('update' , $request->user(), $blogId)){
             alert()->error("You Don't Have Permission to Edit this Blog!",'Error');
             return redirect(route('index'));
         }
 
-        $blog = $this->blogService->blogRepository->findById($blogId);
+        $blog = $this->blogRepository->findById($blogId);
         $images = $blog->images;
 
         
@@ -119,7 +118,7 @@ class BlogController extends Controller
      */
     public function update(UpdateBlogRequest $request, $blogId)
     {
-        if(!$this->blogService->blogRepository->can('update' , $request->user(), $blogId)){
+        if(!$this->blogRepository->can('update' , $request->user(), $blogId)){
             alert()->error("You Don't Have Permission to Edit this Blog!",'Error');
             return redirect(route('index'));
         }
@@ -146,7 +145,7 @@ class BlogController extends Controller
     public function destroy(Request $request , $blogId)
     {
         
-        if($this->blogService->blogRepository->can('delete' , $request->user(), $blogId)){
+        if($this->blogRepository->can('delete' , $request->user(), $blogId)){
             alert()->success('Your Blog was Deleted Successfully!','Success'); 
             $this->blogService->delete($blogId);
 

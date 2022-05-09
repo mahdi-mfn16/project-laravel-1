@@ -18,10 +18,12 @@ class BlogController extends Controller
 
 
      private $blogService;
+     private $blogRepository;
 
-     public function __construct(BlogService $blogService)
+     public function __construct(BlogService $blogService, BlogRepositoryInterface $blogRepository)
      {
          $this->blogService = $blogService;
+         $this->blogRepository = $blogRepository;
 
      }
 
@@ -36,7 +38,7 @@ class BlogController extends Controller
             
         }
 
-        $blogs = $this->blogService->blogRepository->paginate(5);
+        $blogs = $this->blogRepository->paginate(5);
 
         return view('admin.blogs.index' , ['blogs'=>$blogs]);
     }
@@ -62,7 +64,7 @@ class BlogController extends Controller
             
         }
 
-        $blog = $this->blogService->blogRepository->findById($blogId);
+        $blog = $this->blogRepository->findById($blogId);
         $images = $blog->images;
 
         
