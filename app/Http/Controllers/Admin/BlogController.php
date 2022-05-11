@@ -24,7 +24,6 @@ class BlogController extends Controller
      {
          $this->blogService = $blogService;
          $this->blogRepository = $blogRepository;
-
      }
 
     

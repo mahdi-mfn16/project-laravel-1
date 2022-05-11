@@ -14,7 +14,7 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
         parent::__construct($model);
     }
 
-    public function upload($images, $blog)
+    public function upload($images, $blogId)
     {
 
         foreach ($images as $image) {
@@ -26,7 +26,7 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
             $this->model->create([
                 'name' => $name,
                 'path' => '/uploads/' . $path,
-                'blog_id' => $blog->id,
+                'blog_id' => $blogId,
             ]);
         }
     }

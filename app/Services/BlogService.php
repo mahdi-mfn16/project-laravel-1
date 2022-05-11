@@ -31,7 +31,7 @@ class BlogService
         if ($request->hasfile('images')) {
             
             $images = $request->file('images');
-            $this->imageRepository->upload($images , $blog);
+            $this->imageRepository->upload($images , $blog->id);
          }
         
     }
@@ -48,12 +48,11 @@ class BlogService
            
         ],$blogId);
 
-        $blog = $this->blogRepository->findById($blogId);
     
 
         if ($request->hasfile('images')) {
             $images = $request->file('images');
-            $this->imageRepository->upload($images , $blog);
+            $this->imageRepository->upload($images , $blogId);
          }
         
     }

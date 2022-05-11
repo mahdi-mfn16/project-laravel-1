@@ -86,6 +86,7 @@ class AdminService
                     $one_permission->id
                 );
             }
+            
         } else {
             $admin->permissions()->detach();
         }
